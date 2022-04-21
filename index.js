@@ -1,12 +1,12 @@
-const http = require('http');
-const slot = process.env.WEBSLOT || "Staging"
-const resp = `Good Job! This App is deployed to the ${slot} Slot.`
-const server = http.createServer((request, response) => {
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end(resp);
-});
+const express = require('express');
+
+const app = new express()
+app.use(express.static('public'))
+app.use('/images', express.static(__dirname + "/public/images"))
+
 
 const port = process.env.PORT || 1337;
-server.listen(port);
-
-console.log("Server running at http://localhost:%d", port);
+var server = app.listen(port, function(){
+    var port = server.address().port;
+    console.log("Server started at http://localhost:%s", port);
+});
